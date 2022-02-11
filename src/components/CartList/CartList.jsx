@@ -37,22 +37,19 @@ const CartList = () => {
     return item;
   };
 
-  useEffect(() => {
-    if (subTotal.length !== 0) {
-      setTotal(
-        subTotal.reduce((acc, item) => acc + item.subTotal),
-        0,
-      );
-    }
-  }, [subTotal]);
+  // useEffect(() => {
+  //   if (subTotal.length !== 0) {
+  //     console.log(subTotal)
+  //   }
+  // }, [subTotal]);
 
-  const handleChange2 = (item) => {
-    setSubTotal([...subTotal, item]);
-    console.log('subTotal:', subTotal);
+  // setSubTotal([...subTotal, e]
 
-    // subTotal.map((item) => {
-    //   console.log(item);
-    // });
+     
+  
+  const testeFunction = (obj) => {
+    console.log('obj:', obj);
+    // setSubTotal([...subTotal, obj])
   };
 
   return (
@@ -80,7 +77,7 @@ const CartList = () => {
                         key={item.id}
                         cartIndex={key}
                         deleteItem={() => DeleteFromCart(item)}
-                        onChange={(item) => handleChange2(item)}
+                        changeTotal={testeFunction}
                       />
                     ))}
                   </tbody>
@@ -93,12 +90,12 @@ const CartList = () => {
               <div className="subtotal-title">Total no carrinho</div>
               <div className="subtotal-price">
                 <div className="subtotal-price-text">
-                  Subtotal:
+                  {/* Subtotal:
                   {
                     (subTotal.length !== 0 &&
                       subTotal.reduce((acc, item) => acc + item.subTotal),
                     0)
-                  }
+                  } */}
                 </div>
               </div>
             </div>

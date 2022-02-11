@@ -3,28 +3,22 @@ import SelectSize from '../SelectSize/SelectSize';
 import './CartItem.scss';
 import { IoMdClose } from 'react-icons/io';
 
-function CartItem({ item, deleteItem, cartIndex, onChange }) {
+function CartItem({ item, deleteItem, cartIndex, changeTotal }) {
   const [size, setSize] = useState(item.size);
   const [quantity, setQuantity] = useState(item.quantity);
-  const [subTotal, setSubTotal] = useState(
-    (item.price * item.quantity).toFixed(2),
-  );
+
+  const [productObject, setProductObject] = useState({ name: item.name, quantity: item.price * quantity });
 
   const calculateItem = (item) => item.quantity * item.price;
 
-  const handleChange = (e) => {
-    const value = parseInt(e);
-    setQuantity(value);
-    const subTotalValue = calculateItem({ ...item }).toFixed(2);
-    setSubTotal(subTotalValue);
-  };
+  const changeSubTotal = changeTotal({ name: item.name, quantity: item.price * quantity })
 
-  useEffect(() => {
-    onChange({ [item.name]: subTotal });
-  }, []);
-
+  // useEffect(() => {
+  //   onChange(productObject);
+  // }, [productObject]);
+  
   return (
-    <tr onChange={() => onChange({ [item.name]: subTotal, quantity })}>
+    <tr onChange={changeSubTotal}>
       <td scope="row">
         <img className="cart-image" src={item.image} alt={item.name} />
       </td>
@@ -35,14 +29,14 @@ function CartItem({ item, deleteItem, cartIndex, onChange }) {
           className="product-quantity"
           min="1"
           defaultValue={quantity}
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => setQuantity(e.target.value)}
         />
       </td>
       <td>
         <SelectSize option={size} onChange={setSize} />
       </td>
       <td>{item.price.toFixed(2)}</td>
-      <td>{subTotal}</td>
+      <td>{item.price * quantity}</td>
       <td className="delete-section">
         <IoMdClose
           className="delete-btn"
